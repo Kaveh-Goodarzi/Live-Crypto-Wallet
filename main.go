@@ -32,3 +32,5 @@ func main() {
 	fmt.Println(humanData)
 	fmt.Printf("Bitcoin cost: %.2f\n", humanData.Bitcoin.USD)
 }
+
+// Web-Server Will Add Here

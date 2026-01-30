@@ -15,7 +15,7 @@ A simple Go application that fetches real-time cryptocurrency prices from CoinGe
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Go 1.16 or higher
+- Go 1.25 or higher
 
 ### Installation
 1. Clone the repository:
@@ -40,6 +40,8 @@ crypto-tracker/
 ├── main.go          # Main application code
 ├── README.md        # This file
 └── go.mod           # Go module file
+└── LICENSE
+└── Dockerfile
 ```
 
 ---
