@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -27,7 +26,7 @@ func GetPrices(ids []string) (Prices, error) {
 	defer resp.Body.Close()
 
 	var prices Prices
-	if err := json.Unmarshal(resp.Body).Decode(prices); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&prices); err != nil {
 		return nil, err
 	}
 
@@ -48,4 +47,5 @@ func main() {
 
 	for _, coin := range coins {
 		fmt.Printf("%s price: %0.2f USD\n", coin, prices[coin].USD)
+	}
 }
