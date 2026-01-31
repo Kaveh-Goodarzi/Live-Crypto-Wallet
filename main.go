@@ -35,5 +35,17 @@ func GetPrices(ids []string) (Prices, error) {
 }
 
 func main() {
+	coins := []string{
+		"bitcoin",
+		"ethereum",
+		"solana",
+	}
 
+	prices, err := GetPrices(coins)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, coin := range coins {
+		fmt.Printf("%s price: %0.2f USD\n", coin, prices[coin].USD)
 }
