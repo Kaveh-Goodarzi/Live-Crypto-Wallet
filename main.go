@@ -17,7 +17,7 @@ type Prices map[string]Price
 func GetPrices(ids []string) (Prices, error) {
 	url := fmt.Sprintf(
 		"https://api.coingecko.com/api/v3/simple/price?ids=%s&vs_currencies=usd",
-		strings.Join(ids, ",")
+		strings.Join(ids, ","),
 	)
 
 	resp, err := http.Get(url)
