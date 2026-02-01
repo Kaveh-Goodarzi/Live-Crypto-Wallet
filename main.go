@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
-	"strings"
 )
 
 type Price struct {
@@ -13,13 +14,9 @@ type Price struct {
 
 type Prices map[string]Price
 
-func GetPrices(ids []string) (Prices, error) {
-	url := fmt.Sprintf(
-		"https://api.coingecko.com/api/v3/simple/price?ids=%s&vs_currencies=usd",
-		strings.Join(ids, ","),
-	)
+func GetPrices() (Prices, error) {
+	resp, err := http.Get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd")
 
-	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -33,19 +30,21 @@ func GetPrices(ids []string) (Prices, error) {
 	return prices, nil
 }
 
-func main() {
-	coins := []string{
-		"bitcoin",
-		"ethereum",
-		"solana",
-	}
-
-	prices, err := GetPrices(coins)
+func handler(w http.ResponseWriter, r *http.Request) {
+	prices, err := GetPrices()
 	if err != nil {
-		panic(err)
+		http.Error(w, "API Error", 500)
+		return
 	}
 
-	for _, coin := range coins {
-		fmt.Printf("%s price: %0.2f USD\n", coin, prices[coin].USD)
-	}
+	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl.Execute(w, prices)
+}
+
+func main() {
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.HandleFunc("/", handler)
+
+	fmt.Println("Listennig on 8080 port")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

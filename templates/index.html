@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Live Crypto Wallet</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
 
@@ -24,19 +24,19 @@
 <section class="main-btc">
     <div class="coin-card big">
         <div class="coin-name">BTC • Bitcoin</div>
-        <div class="price">$83,210.22</div>
+        <div class="price">${{printf "%.2f" (index . "bitcoin").USD}}</div>
     </div>
 </section>
 
 <section class="coins-grid">
     <div class="coin-card">
         <div class="coin-name">ETH • Ethereum</div>
-        <div class="price">$2,310.45</div>
+        <div class="price">${{printf "%.2f" (index . "ethereum").USD}}</div>
     </div>
 
     <div class="coin-card">
         <div class="coin-name">SOL • Solana</div>
-        <div class="price">$102.11</div>
+        <div class="price">${{printf "%.2f" (index . "solana").USD}}</div>
     </div>
 
     <!-- Will Add Soon:-->
